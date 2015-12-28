@@ -1,0 +1,7 @@
+.selected-page{
+    font-size : 130%;
+}
+
+span[name="page"]{
+    cursor : pointer;
+}

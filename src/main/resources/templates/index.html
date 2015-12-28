@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:src="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" media="screen"/>
+    <link rel="stylesheet" th:src="@{/css/styles.css}" href="css/styles.css" media="screen"/>
+    <title>Employer system</title>
+</head>
+<body>
+<div class="container">
+    <br/>
+    <br/>
+    <div class="container row">
+        <button onclick="Employer.goBackScope()" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span></button>
+        <button onclick="Employer.goBack()" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span></button>
+        <label id="pagination_pages" class="control-label">
+        </label>
+        <button onclick="Employer.goForward()" class="btn btn-default"><span class="glyphicon glyphicon-forward"></span></button>
+        <button onclick="Employer.goForwardScope()" class="btn btn-default"><span class="glyphicon glyphicon-fast-forward"></span></button>
+    </div>
+    <br/>
+    <table id="employer_table" class="table table-bordered table-hover text-center">
+        <tr name="header">
+            <th class="text-center">empID</th>
+            <th class="text-center">empName</th>
+            <th class="text-center">empActive</th>
+            <th class="text-center">empDepartment</th>
+            <th class="text-center">Manage</th>
+        </tr>
+    </table>
+    <div class="pull-right">
+        <button type="button" onclick="Employer.clearNewEmployerModal()" data-toggle="modal" data-target="#new_modal" class="btn btn-default">Add new</button>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="search_value" placeholder="Start with..."/>
+        </div>
+        <button type="button" onclick="Employer.filter()" class="btn btn-default pull-left">Search</button>
+    </div>
+</div>
+<!-- Edit employer modal -->
+<div id="edit_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New employer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input id="edit_employer_name" type="text" class="form-control" placeholder="name"/>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input id="edit_employer_active" type="checkbox"/>Active
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Department</label>
+                    <select id="edit_employer_department" class="form-control">
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Employer.update()" class="btn btn-default">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- New employer modal -->
+<div id="new_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New employer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input id="new_employer_name" type="text" class="form-control" placeholder="name"/>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input id="new_employer_active" type="checkbox"/>Active
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Department</label>
+                    <select id="new_employer_department" class="form-control">
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Employer.save()" class="btn btn-default">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Error modal -->
+<div class="modal fade" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="error_title"></h4>
+            </div>
+            <div class="modal-body" id="error_content">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/jquery-2.1.4.js}" src="js/jquery-2.1.4.js"></script>
+<script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script th:src="@{/js/spinner/busNotInd.js}" src="js/spinner/busNotInd.js"></script>
+<script th:src="@{/js/spinner/cvi_busy_lib.js}" src="js/spinner/cvi_busy_lib.js"></script>
+<script th:src="@{/js/main.js}" src="js/main.js"></script>
+</html>
