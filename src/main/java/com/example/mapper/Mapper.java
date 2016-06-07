@@ -2,12 +2,15 @@ package com.example.mapper;
 
 import com.example.entity.Department;
 import com.example.entity.Employer;
+import org.springframework.stereotype.Service;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Service
 public class Mapper {
 
-  public static Employer mapEmployer(ResultSet rs, int rowNum) throws SQLException {
+  public Employer mapEmployer(ResultSet rs, int rowNum) throws SQLException {
     Employer employer = new Employer();
     employer.setId(rs.getInt("empID"));
     employer.setName(rs.getString("empName"));
@@ -16,7 +19,7 @@ public class Mapper {
     return employer;
   }
 
-  public static Department mapDepartment(ResultSet rs, int rowNum) throws SQLException {
+  public Department mapDepartment(ResultSet rs, int rowNum) throws SQLException {
     return new Department(rs.getInt("dpID"), rs.getString("dpName"));
   }
 

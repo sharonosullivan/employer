@@ -16,40 +16,62 @@ import java.util.List;
 public class EmployerDAO {
 
   @Autowired
-  JdbcTemplate jdbcTemplate;
+  private JdbcTemplate jdbcTemplate;
+
+  @Autowired
+  private Mapper mapper;
 
   public void saveEmployer(Employer employer) throws Exception {
-    jdbcTemplate.update(Queries.INSERT_NEW_EMPLOYER,
-        new Object[] {employer.getName(), employer.isActive(), employer.getDepartmentId()});
+    jdbcTemplate
+      .update(
+        Queries.INSERT_NEW_EMPLOYER,
+        employer.getName(),
+        employer.isActive(),
+        employer.getDepartmentId());
   }
 
   public void updateEmployer(Employer employer) throws Exception {
-    jdbcTemplate.update(Queries.UPDATE_EMPLOYER,
-        new Object[] {employer.getName(), employer.isActive(), employer.getDepartmentId(),
-            employer.getId()});
+    jdbcTemplate
+      .update(
+        Queries.UPDATE_EMPLOYER,
+        employer.getName(),
+        employer.isActive(),
+        employer.getDepartmentId(),
+        employer.getId());
   }
 
   public void deleteEmployer(int id) throws Exception {
-    jdbcTemplate.update(Queries.DELETE_EMPLOYER, new Object[] {id});
+    jdbcTemplate.update(Queries.DELETE_EMPLOYER, id);
   }
 
   public List<Employer> loadEmployees(Search search) throws Exception {
     if(search.getFilter() == null || search.getFilter().isEmpty()){
       return jdbcTemplate
-          .query(String.format(Queries.LOAD_EMPLOYEES, ""), new Object[] {search.getNewPosition(), ProjectConstants.ROWS_PER_PAGE},
-              (rs, rowNum) -> Mapper.mapEmployer(rs, rowNum));
+          .query(
+            String.format(Queries.LOAD_EMPLOYEES, ""),
+            mapper::mapEmployer, search.getNewPosition(),
+            ProjectConstants.ROWS_PER_PAGE);
     }else{
       return jdbcTemplate
-          .query(String.format(Queries.LOAD_EMPLOYEES, ProjectConstants.FILTER_FOR_QUERY), new Object[] {search.getFilter() + "%", search.getNewPosition(), ProjectConstants.ROWS_PER_PAGE},
-              (rs, rowNum) -> Mapper.mapEmployer(rs, rowNum));
+          .query(
+            String.format(Queries.LOAD_EMPLOYEES, ProjectConstants.FILTER_FOR_QUERY),
+            mapper::mapEmployer, search.getFilter() + "%", search.getNewPosition(),
+            ProjectConstants.ROWS_PER_PAGE);
     }
   }
 
   public int countOfEmployees(String filter) throws Exception {
     if(filter == null || filter.isEmpty()){
-      return jdbcTemplate.queryForObject(String.format(Queries.COUNT_OF_EMPLOYEES, ""), Integer.class);
+      return jdbcTemplate
+        .queryForObject(
+          String.format(Queries.COUNT_OF_EMPLOYEES, ""),
+          Integer.class);
     }else{
-      return jdbcTemplate.queryForObject(String.format(Queries.COUNT_OF_EMPLOYEES, ProjectConstants.COUNT_FILTERED), Integer.class, new Object[]{filter + "%"});
+      return jdbcTemplate
+        .queryForObject(
+          String.format(Queries.COUNT_OF_EMPLOYEES, ProjectConstants.COUNT_FILTERED),
+          Integer.class,
+          filter + "%");
     }
   }
 

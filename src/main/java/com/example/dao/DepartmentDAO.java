@@ -12,10 +12,17 @@ import java.util.List;
 @Service
 public class DepartmentDAO {
 
-  @Autowired JdbcTemplate jdbcTemplate;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
+
+  @Autowired
+  private Mapper mapper;
 
   public List<Department> loadDepartments() throws Exception{
-    return jdbcTemplate.query(Queries.LOAD_DEPARTMENTS, (rs, rowNum) -> Mapper.mapDepartment(rs, rowNum));
+    return jdbcTemplate
+      .query(
+        Queries.LOAD_DEPARTMENTS,
+        mapper::mapDepartment);
   }
 
 }

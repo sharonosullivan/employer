@@ -21,9 +21,9 @@ import java.util.List;
 public class EmployerController {
 
   @Autowired
-  EmployerDAO employerDAO;
+  private EmployerDAO employerDAO;
   @Autowired
-  DepartmentDAO departmentDAO;
+  private DepartmentDAO departmentDAO;
 
   @RequestMapping(value = "/save", method = RequestMethod.POST)
   private String saveNewEmployer(Employer employer){
